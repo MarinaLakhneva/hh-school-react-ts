@@ -1,5 +1,3 @@
-import {randomInt} from "crypto";
-
 export {};
 const URL_ = 'https://api.github.com/repos/';
 
@@ -11,11 +9,16 @@ export function GetData(){
 	const repositories = document.getElementById('repos') as HTMLInputElement;
 	const contrib = document.getElementById('contrib') as HTMLInputElement;
 	
-	let p = document.getElementById("rev") as HTMLInputElement;
+	let res = document.getElementById("rev") as HTMLInputElement;
 	
 	const user = login?.value;
 	const repos = repositories?.value;
 	const rev = contrib?.value;
+	
+	localStorage.setItem('login', user);
+	localStorage.setItem('repos', repos);
+	localStorage.setItem('blackrev', rev);
+	
 	let URL = URL_+user+'/'+repos+'/contributors';
 	console.log(URL)
 	fetch(URL)
@@ -30,18 +33,17 @@ export function GetData(){
 					let size = data.length;
 					let white = [];
 					let black = []
-					let n = randomize(0, size-1-1);
 					
 					for (let i = 0; i < size; i++){
 						black[i] = data[i].login;
-						if(data[i].login != rev){
-							white[i] = data[i].login;
-						}
 					}
+					white = black.filter(val => val !== rev);
 					console.log("All reviewers:", black);
 					console.log("Whitelist", white);
 					console.log("Blacklist:", rev);
-					p.innerHTML = white[n];
+					
+					let n = randomize(0, size-1-1);
+					res.innerHTML = white[n];
 					return;
 				})
 			})
