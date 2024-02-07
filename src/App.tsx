@@ -1,6 +1,7 @@
 import React from 'react';
 import { MouseEvent } from 'react';
 import "./App.css"
+import {GetData} from './request';
 
 
 export default function App() {
@@ -19,10 +20,10 @@ export default function App() {
     <div className="App">
       <button className="settings" onClick={handleClick}>Settings</button>
       <div id="functional">
-        <input placeholder="login"/>
-        <input placeholder="repo"/>
-        <input placeholder="blacklist"/>
-        <button className="search">search</button>
+        <input id="login" placeholder="login"/>
+        <input id="repos" placeholder="repo"/>
+        <input id="contrib" placeholder="blacklist"/>
+        <button className="search" onClick={GetData}>search</button>
       </div>
     </div>
   );
