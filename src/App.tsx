@@ -18,12 +18,18 @@ export default function App() {
   };
   return (
     <div className="App">
-      <button className="settings" onClick={handleClick}>Settings</button>
-      <div id="functional">
-        <input id="login" placeholder="login"/>
-        <input id="repos" placeholder="repo"/>
-        <input id="contrib" placeholder="blacklist"/>
-        <button className="search" onClick={GetData}>search</button>
+      <div className="result">
+        <p>Your reviewer:</p>
+        <p id="rev"></p>
+      </div>
+      <div className="form">
+        <button className="settings" onClick={handleClick}>Settings</button>
+        <div id="functional">
+          <input id="login" placeholder="login"/>
+          <input id="repos" placeholder="repo"/>
+          <input id="contrib" placeholder="blacklist"/>
+          <button className="search" onClick={GetData}>search</button>
+        </div>
       </div>
     </div>
   );
