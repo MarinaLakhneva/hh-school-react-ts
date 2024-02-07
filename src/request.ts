@@ -11,6 +11,8 @@ export function GetData(){
 	const repositories = document.getElementById('repos') as HTMLInputElement;
 	const contrib = document.getElementById('contrib') as HTMLInputElement;
 	
+	let p = document.getElementById("rev") as HTMLInputElement;
+	
 	const user = login?.value;
 	const repos = repositories?.value;
 	const rev = contrib?.value;
@@ -26,15 +28,21 @@ export function GetData(){
 				}
 				response.json().then((data) =>{
 					let size = data.length;
-					let n = randomize(0, size-1);
-					if(rev === data[n].login){
-						console.log("OOOps... This reviewer is blacklisted!!!");
-						return;
+					let white = [];
+					let black = []
+					let n = randomize(0, size-1-1);
+					
+					for (let i = 0; i < size; i++){
+						black[i] = data[i].login;
+						if(data[i].login != rev){
+							white[i] = data[i].login;
+						}
 					}
-					else {
-						console.log(data[n].login);
-						return;
-					}
+					console.log("All reviewers:", black);
+					console.log("Whitelist", white);
+					console.log("Blacklist:", rev);
+					p.innerHTML = white[n];
+					return;
 				})
 			})
 		.catch((err) => {
