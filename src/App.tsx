@@ -7,16 +7,34 @@ const randomize = (min: number, max: number): number =>{
   return min + Math.floor((max-min+1)*Math.random())
 }
 
+function Store(key: string, param: string)  {
+  if (localStorage.getItem(key) === null){
+    localStorage.setItem(key, param);
+  }
+}
+
 export default function App() {
   const [look, setLook] = useState(true);
   
-  const [user, setLogin] = useState('');
-  const [repos, setRepo] = useState('');
-  const [rev, setBlackRev] = useState('');
+
+  const [user, setUser] = useState ( () => {
+    const savedItem = localStorage.getItem("user");
+    return savedItem || "";
+  });
+  const [repo, setRepo] = useState ( () => {
+    const savedItem = localStorage.getItem("repo");
+    return savedItem || "";
+  });
+  const [rev, setBlackRev] = useState ( () => {
+    const savedItem = localStorage.getItem("rev");
+    return savedItem || "";
+  });
   
-  const [contributor, setRev] = useState('');
+  const [contributor, setContributor] = useState('');
+  
+  let blackList: string[] = []
   function GetData()  {
-    let URL = URL_+user+'/'+repos+'/contributors';
+    let URL = URL_+user+'/'+repo+'/contributors';
     
     fetch(URL)
       .then(
@@ -34,17 +52,16 @@ export default function App() {
             for (let i = 0; i < size; i++){
               black[i] = data[i].login;
             }
-            white = black.filter(val => val !== rev);
+            blackList = rev.split(', ');
+            white = black.filter(val =>  !blackList.includes(val));
             
-            const inputs = { user, repos, rev };
-            if (localStorage.getItem('inputs') === null){
-              localStorage.setItem('inputs', JSON.stringify(inputs));
-            }else {
-              localStorage.getItem('inputs');
-            }
+            Store('user', user);
+            Store('repo', repo);
+            Store('rev', rev);
+
+            let n = randomize(0, size-1-blackList.length);
             
-            let n = randomize(0, size-1-1);
-            setRev(white[n]);
+            setContributor(white[n]);
             return;
           })
         })
@@ -74,12 +91,12 @@ export default function App() {
               placeholder="login"
               key={1}
               value={user}
-              onChange={(e) => setLogin(e.target.value)}/>
+              onChange={(e) => setUser(e.target.value)}/>
             <input
               id="repo"
               placeholder="repo"
               key={2}
-              value={repos}
+              value={repo}
               onChange={(e) => setRepo(e.target.value)}/>
             <input
               id="blackRev"
@@ -89,7 +106,7 @@ export default function App() {
               onChange={(e) => setBlackRev(e.target.value)}
             />
           </div>
-          <button className="search" onClick={GetData}>SEARCH</button>
+          <button className="search" onClick={GetData}>search</button>
         </div>}
       </div>
     </div>
