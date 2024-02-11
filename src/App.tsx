@@ -89,7 +89,7 @@ export default function App() {
               onChange={(e) => setBlackRev(e.target.value)}
             />
           </div>
-          <button className="search" onClick={GetData}>search</button>
+          <button className="search" onClick={GetData}>SEARCH</button>
         </div>}
       </div>
     </div>
