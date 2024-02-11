@@ -15,22 +15,21 @@ function Store(key: string, param: string)  {
 
 export default function App() {
   const [look, setLook] = useState(true);
-  
 
-  const [user, setUser] = useState ( () => {
+  const [user, setUser] = useState<string>( () => {
     const savedItem = localStorage.getItem("user");
     return savedItem || "";
   });
-  const [repo, setRepo] = useState ( () => {
+  const [repo, setRepo] = useState<string>( () => {
     const savedItem = localStorage.getItem("repo");
     return savedItem || "";
   });
-  const [rev, setBlackRev] = useState ( () => {
-    const savedItem = localStorage.getItem("rev");
+  const [blackContributors, setBlackContributors] = useState<string>( () => {
+    const savedItem = localStorage.getItem("blackContributors");
     return savedItem || "";
   });
   
-  const [contributor, setContributor] = useState('');
+  const [rev, setRev] = useState<string>('');
   
   let blackList: string[] = []
   function GetData()  {
@@ -52,16 +51,16 @@ export default function App() {
             for (let i = 0; i < size; i++){
               black[i] = data[i].login;
             }
-            blackList = rev.split(', ');
+            blackList = blackContributors.split(', ');
             white = black.filter(val =>  !blackList.includes(val));
             
             Store('user', user);
             Store('repo', repo);
-            Store('rev', rev);
+            Store('blackContributors', blackContributors);
 
             let n = randomize(0, size-1-blackList.length);
+            setRev(white[n]);
             
-            setContributor(white[n]);
             return;
           })
         })
@@ -78,8 +77,8 @@ export default function App() {
           <p>{user}</p>
         </div>
         <div className="info">
-          <p className="title">Rev:</p>
-          <p>{contributor}</p>
+          <p className="title">Reviewer:</p>
+          <p>{rev}</p>
         </div>
       </div>
       <div className="form">
@@ -94,16 +93,16 @@ export default function App() {
               onChange={(e) => setUser(e.target.value)}/>
             <input
               id="repo"
-              placeholder="repo"
+              placeholder="repository"
               key={2}
               value={repo}
               onChange={(e) => setRepo(e.target.value)}/>
             <input
-              id="blackRev"
-              placeholder="blackRev"
+              id="blackContributors"
+              placeholder="blackList"
               key={3}
-              value={rev}
-              onChange={(e) => setBlackRev(e.target.value)}
+              value={blackContributors}
+              onChange={(e) => setBlackContributors(e.target.value)}
             />
           </div>
           <button className="search" onClick={GetData}>search</button>
