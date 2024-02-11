@@ -1,26 +1,11 @@
-export {};
 const URL_ = 'https://api.github.com/repos/';
 
 const randomize = (min: number, max: number): number =>{
 	return min + Math.floor((max-min+1)*Math.random())
 }
-export function GetData(){
-	const login = document.getElementById('login') as HTMLInputElement;
-	const repositories = document.getElementById('repos') as HTMLInputElement;
-	const contrib = document.getElementById('contrib') as HTMLInputElement;
-	
-	let res = document.getElementById("rev") as HTMLInputElement;
-	
-	const user = login?.value;
-	const repos = repositories?.value;
-	const rev = contrib?.value;
-	
-	localStorage.setItem('login', user);
-	localStorage.setItem('repos', repos);
-	localStorage.setItem('blackrev', rev);
-	
+export const GetData = (user: string, repos: string, rev: string) => () => {
 	let URL = URL_+user+'/'+repos+'/contributors';
-	console.log(URL)
+
 	fetch(URL)
 		.then(
 			(response) => {
@@ -38,12 +23,19 @@ export function GetData(){
 						black[i] = data[i].login;
 					}
 					white = black.filter(val => val !== rev);
+					console.log("User:", user)
 					console.log("All reviewers:", black);
-					console.log("Whitelist", white);
-					console.log("Blacklist:", rev);
+					console.log("BlackList:", rev);
+					
+					const inputs = { user, repos, rev };
+					if (localStorage.getItem('inputs') === null){
+						localStorage.setItem('inputs', JSON.stringify(inputs));
+					}else {
+						localStorage.getItem('inputs');
+					}
 					
 					let n = randomize(0, size-1-1);
-					res.innerHTML = white[n];
+					console.log("Reviewer:", white[n])
 					return;
 				})
 			})
