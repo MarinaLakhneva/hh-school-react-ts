@@ -47,12 +47,18 @@ const Inputs: React.FC<Props> = ({setInputs, inputs}) => {
 						}
 						blackList = inputs.blackContributors.split(', ');
 						let white: string[] = black.filter(val =>  !blackList.includes(val));
-						
+						console.log(white)
 						store('user', inputs.user);
 						store('repo', inputs.repo);
 						store('blackContributors', inputs.blackContributors);
 						
+						if(blackList.length === 1){
+							if(blackList[0] === ''){
+								blackList.length = 0;
+							}
+						}
 						let n: number = randomize(0, size-1-blackList.length);
+						
 						updateInputs("rev", white[n]);
 						return;
 					})
