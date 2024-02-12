@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface I_inputs {
 	user: string,
 	repo: string,
