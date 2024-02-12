@@ -4,13 +4,8 @@ import {Props} from "../Interface";
 const URL_: string = 'https://api.github.com/repos/';
 
 function store(key: string, param: string)  {
-	if (localStorage.getItem(key) === null){
+	if(localStorage.getItem(key) !== param){
 		localStorage.setItem(key, param);
-	}
-	else {
-		if(localStorage.getItem(key) !== param){
-			localStorage.setItem(key, param);
-		}
 	}
 }
 const randomize = (min: number, max: number): number =>{
@@ -91,8 +86,7 @@ const Inputs: React.FC<Props> = ({setInputs}) => {
 						key={1}
 						value={user}
 						onChange={(e) => {
-							setUser(e.target.value);
-							updateInputs("user", e.target.value)}
+							setUser(e.target.value);}
 						}/>
 					<input
 						id="repo"
@@ -100,8 +94,7 @@ const Inputs: React.FC<Props> = ({setInputs}) => {
 						key={2}
 						value={repo}
 						onChange={(e) => {
-							setRepo(e.target.value);
-							updateInputs("repo", e.target.value)}
+							setRepo(e.target.value);}
 						}/>
 					<input
 						id="blacklist"
@@ -109,8 +102,7 @@ const Inputs: React.FC<Props> = ({setInputs}) => {
 						key={3}
 						value={blackContributors}
 						onChange={(e) => {
-							setBlackContributors(e.target.value);
-							updateInputs("blackContributors", e.target.value)}
+							setBlackContributors(e.target.value);}
 						}/>
 				</div>
 				<button className="search" onClick={getData}>search</button>
