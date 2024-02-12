@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import {Props} from "../Interface";
-const URL_ = 'https://api.github.com/repos/';
+
+const URL_: string = 'https://api.github.com/repos/';
+
 function Store(key: string, param: string)  {
 	if (localStorage.getItem(key) === null){
 		localStorage.setItem(key, param);
 	}
 	else {
-		if(localStorage.getItem(key) != param){
+		if(localStorage.getItem(key) !== param){
 			localStorage.setItem(key, param);
 		}
 	}
@@ -14,7 +16,9 @@ function Store(key: string, param: string)  {
 const randomize = (min: number, max: number): number =>{
 	return min + Math.floor((max-min+1)*Math.random())
 }
-const Inputs: React.FC<Props> = ({inputs, setInputs}) => {
+
+
+const Inputs: React.FC<Props> = ({setInputs}) => {
 	const [visible, setVisible] = useState<boolean>(true);
 	
 	const [user, setUser] = useState<string>( () => {
@@ -42,7 +46,7 @@ const Inputs: React.FC<Props> = ({inputs, setInputs}) => {
 	let blackList: string[] = []
 	
 	function GetData()  {
-		let URL = URL_+user+'/'+repo+'/contributors';
+		let URL: string = URL_+user+'/'+repo+'/contributors';
 		
 		fetch(URL)
 			.then(
@@ -53,27 +57,26 @@ const Inputs: React.FC<Props> = ({inputs, setInputs}) => {
 						return;
 					}
 					response.json().then((data) =>{
-						let size = data.length;
-						let white = [];
-						let black = []
+						let size: number = data.length;
+						let black: string[] = [];
 						
-						for (let i = 0; i < size; i++){
+						for (let i: number = 0; i < size; i++){
 							black[i] = data[i].login;
 						}
 						blackList = blackContributors.split(', ');
-						white = black.filter(val =>  !blackList.includes(val));
+						let white: string[] = black.filter(val =>  !blackList.includes(val));
 						
 						Store('user', user);
 						Store('repo', repo);
 						Store('blackContributors', blackContributors);
 						
-						let n = randomize(0, size-1-blackList.length);
+						let n: number = randomize(0, size-1-blackList.length);
 						updateInputs("rev", white[n]);
 						return;
 					})
 				})
 			.catch((err) => {
-				console.log(err )
+				console.log(err)
 			})
 	}
 	

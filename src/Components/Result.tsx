@@ -1,7 +1,7 @@
 import React from "react";
 import {Props} from "../Interface";
 
-const Result: React.FC<Props> = ({inputs, setInputs}) =>{
+const Result: React.FC<Props> = ({inputs}) =>{
 	return(
 		<div className="result">
 			<div className="info">
