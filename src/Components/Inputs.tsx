@@ -5,22 +5,27 @@ function Store(key: string, param: string)  {
 	if (localStorage.getItem(key) === null){
 		localStorage.setItem(key, param);
 	}
+	else {
+		if(localStorage.getItem(key) != param){
+			localStorage.setItem(key, param);
+		}
+	}
 }
 const randomize = (min: number, max: number): number =>{
 	return min + Math.floor((max-min+1)*Math.random())
 }
 const Inputs: React.FC<Props> = ({inputs, setInputs}) => {
-	const [visible, setVisible] = useState(true);
+	const [visible, setVisible] = useState<boolean>(true);
 	
-	const [user, setUser] = useState ( () => {
+	const [user, setUser] = useState<string>( () => {
 		const savedItem = localStorage.getItem("user");
 		return savedItem ||  "";
 	});
-	const [repo, setRepo] = useState ( () => {
+	const [repo, setRepo] = useState<string>( () => {
 		const savedItem = localStorage.getItem("repo");
 		return savedItem ||  "";
 	});
-	const [blackContributors, setBlackContributors] = useState ( () => {
+	const [blackContributors, setBlackContributors] = useState<string>( () => {
 		const savedItem = localStorage.getItem("blackContributors");
 		return savedItem || "";
 	});
@@ -58,14 +63,6 @@ const Inputs: React.FC<Props> = ({inputs, setInputs}) => {
 						blackList = blackContributors.split(', ');
 						white = black.filter(val =>  !blackList.includes(val));
 						
-						const inputs = { user, repo, blackContributors };
-	
-						if (localStorage.getItem('inputs') === null){
-							localStorage.setItem('inputs', JSON.stringify(inputs));
-						}else {
-							localStorage.getItem('inputs');
-						}
-						
 						Store('user', user);
 						Store('repo', repo);
 						Store('blackContributors', blackContributors);
@@ -76,7 +73,7 @@ const Inputs: React.FC<Props> = ({inputs, setInputs}) => {
 					})
 				})
 			.catch((err) => {
-				console.log(err )
+				console.log(err);
 			})
 	}
 	
