@@ -3,7 +3,7 @@ import {Props} from "../Interface";
 
 const URL_: string = 'https://api.github.com/repos/';
 
-function Store(key: string, param: string)  {
+function store(key: string, param: string)  {
 	if (localStorage.getItem(key) === null){
 		localStorage.setItem(key, param);
 	}
@@ -45,7 +45,7 @@ const Inputs: React.FC<Props> = ({setInputs}) => {
 	
 	let blackList: string[] = []
 	
-	function GetData()  {
+	function getData()  {
 		let URL: string = URL_+user+'/'+repo+'/contributors';
 		
 		fetch(URL)
@@ -66,9 +66,9 @@ const Inputs: React.FC<Props> = ({setInputs}) => {
 						blackList = blackContributors.split(', ');
 						let white: string[] = black.filter(val =>  !blackList.includes(val));
 						
-						Store('user', user);
-						Store('repo', repo);
-						Store('blackContributors', blackContributors);
+						store('user', user);
+						store('repo', repo);
+						store('blackContributors', blackContributors);
 						
 						let n: number = randomize(0, size-1-blackList.length);
 						updateInputs("rev", white[n]);
@@ -113,7 +113,7 @@ const Inputs: React.FC<Props> = ({setInputs}) => {
 							updateInputs("blackContributors", e.target.value)}
 						}/>
 				</div>
-				<button className="search" onClick={GetData}>search</button>
+				<button className="search" onClick={getData}>search</button>
 			</div>}
 		</div>
 	);
