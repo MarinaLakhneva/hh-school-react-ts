@@ -3,8 +3,8 @@ import React from "react";
 export interface I_inputs {
 	user: string,
 	repo: string,
+	blackContributors: string,
 	rev: string,
-	blackContributors: string
 }
 
 export interface Props {
