@@ -1,0 +1,53 @@
+.form{
+	display: flex;
+	justify-content: center;
+}
+button{
+	border: none;
+	color: white;
+	background: black;
+}
+.settings{
+	display: flex;
+	position: absolute;
+	margin-top: 50px;
+	font-size: 20px;
+}
+#functional{
+	display: flex;
+	margin-top: 150px;
+	flex-direction: column;
+}
+input{
+	width: 600px;
+	padding: 5px 20px;
+	border-radius: 100px;
+	margin-top: 20px;
+	background: white;
+}
+input:nth-child(1){
+	margin-top: 0;
+}
+.search{
+	margin-top: 20px;
+	max-width: 100px;
+	width: 100%;
+	font-size: 15px;
+}
+.result{
+	padding: 5px 10px;
+	color: white;
+	background: black;
+	font-size: 20px;
+}
+#rev{
+	margin-left: 20px;
+}
+.info{
+	display: flex;
+	flex-direction: row;
+	height: 30px;
+}
+.title{
+	margin-right: 10px;
+}
