@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useDispatch} from "react-redux";
 import {ActionTypes} from "../types/types";
@@ -17,9 +17,8 @@ const randomize = (min: number, max: number): number =>{
 
 const Inputs: React.FC = () => {
 	const dispatch = useDispatch();
-	let {user, repo, blackContributors} = useTypedSelector(state => state.user);
+	let {user, repo, blackContributors, visible} = useTypedSelector(state => state.user);
 	
-
 	useEffect(() => {
 		dispatch({
 			type: ActionTypes.INPUT_USER,
@@ -30,15 +29,9 @@ const Inputs: React.FC = () => {
 		dispatch({
 			type: ActionTypes.INPUT_BLACK,
 			payload: localStorage.getItem("blackContributors")!});
-		dispatch({
-			type: ActionTypes.INPUT_REV,
-			payload: localStorage.getItem("rev")!});
 	}, []);
 	
-	const [visible, setVisible] = useState<boolean>(true);
-	
 	let blackList: string[] = []
-	
 	function getData()  {
 		let URL: string = URL_+user+'/'+repo+'/contributors';
 		fetch(URL)
@@ -82,7 +75,7 @@ const Inputs: React.FC = () => {
 	
 	return (
 		<div className="form">
-			<button className="settings" onClick={() =>{setVisible(!visible)}}>Settings</button>
+			<button className="settings" onClick={() =>{dispatch({type: ActionTypes.SET_VISIBLE, payload: !visible});}}>Settings</button>
 			{visible && <div className="visible">
 				<div id="functional">
 					<input
@@ -93,7 +86,7 @@ const Inputs: React.FC = () => {
 						onChange={(e) => {
 							dispatch({
 								type: ActionTypes.INPUT_USER,
-								payload_user: e.target.value})}
+								payload: e.target.value})}
 					}/>
 					<input
 						id="repo"
@@ -103,7 +96,7 @@ const Inputs: React.FC = () => {
 						onChange={(e) => {
 							dispatch({
 								type: ActionTypes.INPUT_REPO,
-								payload_repo: e.target.value})}
+								payload: e.target.value})}
 						}/>
 					<input
 						id="blacklist"
@@ -113,7 +106,7 @@ const Inputs: React.FC = () => {
 						onChange={(e) => {
 							dispatch({
 								type: ActionTypes.INPUT_BLACK,
-								payload_blackContributors: e.target.value})}
+								payload: e.target.value})}
 						}/>
 				</div>
 				<button className="search" onClick={getData}>search</button>

@@ -5,6 +5,7 @@ const initialState: State = {
 	repo: '',
 	blackContributors: '',
 	rev: '',
+	visible: true
 }
 
 export const Reducer = (state = initialState, action: Action): State => {
@@ -25,6 +26,10 @@ export const Reducer = (state = initialState, action: Action): State => {
 			return {
 				...state,
 				rev: action.payload};
+		case ActionTypes.SET_VISIBLE:
+			return {
+				...state,
+				visible: action.payload};
 		default:
 			return state;
 	}

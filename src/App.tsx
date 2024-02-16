@@ -1,7 +1,7 @@
 import React from 'react';
 import "./App.css"
-import Inputs from "./Components/Inputs";
-import Result from "./Components/Result";
+import Inputs from "./components/Inputs";
+import Result from "./components/Result";
 
 export default function App() {
   return (

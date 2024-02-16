@@ -3,6 +3,7 @@ export interface State {
 	repo: string,
 	blackContributors: string,
 	rev: string,
+	visible: boolean
 }
 
 export enum ActionTypes {
@@ -10,6 +11,7 @@ export enum ActionTypes {
 	INPUT_REPO = 'INPUT_REPO',
 	INPUT_BLACK = 'INPUT_BLACK',
 	INPUT_REV = 'INPUT_REV',
+	SET_VISIBLE = 'SET_VISIBLE'
 }
 interface userAction{
 	type: ActionTypes.INPUT_USER;
@@ -31,4 +33,8 @@ interface revAction{
 	payload: string;
 }
 
-export type Action = userAction | repoAction | blackAction | revAction;
+interface visibleAction{
+	type: ActionTypes.SET_VISIBLE;
+	payload: boolean;
+}
+export type Action = userAction | repoAction | blackAction | revAction | visibleAction;
