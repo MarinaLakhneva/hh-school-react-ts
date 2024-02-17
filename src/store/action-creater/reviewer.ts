@@ -15,7 +15,7 @@ export const fetchReviewer = () => {
 				type: ActionTypes.INPUT_BLACK,
 				payload: localStorage.getItem("blackContributors")!});
 		} catch (e) {
-
+			console.log("The problem is in fetchReviewer!")
 		}
 	}
 }

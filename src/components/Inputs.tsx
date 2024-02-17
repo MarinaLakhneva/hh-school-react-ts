@@ -6,19 +6,17 @@ import {useActions} from "../hooks/useActions";
 
 const URL_: string = 'https://api.github.com/repos/';
 
-function store(key: string, param: string)  {
-	if(localStorage.getItem(key) !== param){
-		localStorage.setItem(key, param);
-	}
+const store = (key: string, param: string) => {
+	localStorage.setItem(key, param);
 }
-const randomize = (min: number, max: number): number =>{
+const randomize = (min: number, max: number): number => {
 	return min + Math.floor((max-min+1)*Math.random())
 }
 
 
 const Inputs: React.FC = () => {
 	const dispatch = useDispatch();
-	let {user, repo, blackContributors, visible} = useTypedSelector(state => state.user);
+	const {user, repo, blackContributors, visible} = useTypedSelector(state => state.user);
 	const {fetchReviewer} = useActions()
 	useEffect(() => {
 		fetchReviewer();
@@ -26,7 +24,7 @@ const Inputs: React.FC = () => {
 	
 	let blackList: string[] = []
 	function getData()  {
-		let URL: string = URL_+user+'/'+repo+'/contributors';
+		const URL: string = URL_+user+'/'+repo+'/contributors';
 		fetch(URL)
 			.then(
 				(response) => {
@@ -36,14 +34,14 @@ const Inputs: React.FC = () => {
 						return;
 					}
 					response.json().then((data) =>{
-						let size: number = data.length;
+						const size: number = data.length;
 						let black: string[] = [];
 						
 						for (let i: number = 0; i < size; i++){
 							black[i] = data[i].login;
 						}
 						blackList = blackContributors.split(', ');
-						let white: string[] = black.filter(val =>  !blackList.includes(val));
+						const white: string[] = black.filter(val =>  !blackList.includes(val));
 						
 						store('user', user);
 						store('repo', repo);
@@ -54,7 +52,7 @@ const Inputs: React.FC = () => {
 								blackList.length = 0;
 							}
 						}
-						let n: number = randomize(0, size-1-blackList.length);
+						const n: number = randomize(0, size-1-blackList.length);
 						dispatch({
 							type: ActionTypes.INPUT_REV,
 							payload: white[n]});
