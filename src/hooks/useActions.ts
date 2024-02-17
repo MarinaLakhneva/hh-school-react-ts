@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as ActionCreators from '../store/action-creater/reviewer'
+import ActionCreators from '../store/action-creater/'
 
 //хотела вызывать в useEffect, не получилось, выдает ошибку
 export const useActions = () => {

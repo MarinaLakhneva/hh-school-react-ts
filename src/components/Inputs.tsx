@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useDispatch} from "react-redux";
 import {ActionTypes} from "../types/types";
+import {useActions} from "../hooks/useActions";
 
 const URL_: string = 'https://api.github.com/repos/';
 
@@ -18,17 +19,9 @@ const randomize = (min: number, max: number): number =>{
 const Inputs: React.FC = () => {
 	const dispatch = useDispatch();
 	let {user, repo, blackContributors, visible} = useTypedSelector(state => state.user);
-	
+	const {fetchReviewer} = useActions()
 	useEffect(() => {
-		dispatch({
-			type: ActionTypes.INPUT_USER,
-			payload: localStorage.getItem("user")!});
-		dispatch({
-			type: ActionTypes.INPUT_REPO,
-			payload: localStorage.getItem("repo")!});
-		dispatch({
-			type: ActionTypes.INPUT_BLACK,
-			payload: localStorage.getItem("blackContributors")!});
+		fetchReviewer();
 	}, []);
 	
 	let blackList: string[] = []

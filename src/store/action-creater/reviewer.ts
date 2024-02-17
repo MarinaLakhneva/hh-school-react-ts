@@ -7,8 +7,13 @@ export const fetchReviewer = () => {
 		try {
 			dispatch({
 				type: ActionTypes.INPUT_USER,
-				payload: localStorage.getItem("user")!
-			});
+				payload: localStorage.getItem("user")!});
+			dispatch({
+				type: ActionTypes.INPUT_REPO,
+				payload: localStorage.getItem("repo")!});
+			dispatch({
+				type: ActionTypes.INPUT_BLACK,
+				payload: localStorage.getItem("blackContributors")!});
 		} catch (e) {
 
 		}
